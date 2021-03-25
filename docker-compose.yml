@@ -1,0 +1,51 @@
+version: '3'
+services:
+  # Tests the current internet connection speed
+  # once per hour and writes the results into an
+  # InfluxDB instance
+  speedtest:
+    container_name: ${PROJECT_NAME}-speedtest
+    image: robinmanuelthiel/speedtest:0.1.1
+    restart: always
+    depends_on:
+      - influxdb
+    environment:
+      - LOOP=true
+      - LOOP_DELAY=${LOOP_DELAY}
+      - DB_SAVE=true
+      - DB_HOST=http://influxdb:8086
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+
+  # Creates an InfluxDB instance to store the
+  # speed test results
+  influxdb:
+    container_name: ${PROJECT_NAME}-influxdb
+    image: influxdb
+    restart: always
+    volumes:
+      - ./data/influxdb:/var/lib/influxdb
+    ports:
+      - 8086:8086
+    environment:
+      - INFLUXDB_ADMIN_USER=${DB_USERNAME}
+      - INFLUXDB_ADMIN_PASSWORD=${DB_PASSWORD}
+      - INFLUXDB_DB=${DB_NAME}
+
+  # Displays the results in a Grafana dashborad
+  grafana:
+    container_name: ${PROJECT_NAME}-grafana
+    image: grafana/grafana:latest
+    restart: always
+    depends_on:
+      - influxdb
+    ports:
+      - 3000:3000
+    user: ${UID}
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+
+volumes:
+  grafana:
+  influxdb:
