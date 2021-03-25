@@ -22,7 +22,7 @@ services:
   # speed test results
   influxdb:
     container_name: ${PROJECT_NAME}-influxdb
-    image: influxdb
+    image: arm32v7/influxdb:latest
     restart: always
     volumes:
       - ./data/influxdb:/var/lib/influxdb
