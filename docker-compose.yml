@@ -11,7 +11,7 @@ services:
 
   mosquitto:
     container_name: ${PROJECT_NAME}-mosquitto
-    image: eclipse-mosquitto
+    image: arm32v6/eclipse-mosquitto
     restart: always
     volumes:
       - ./data/mosquitto:/mosquitto
