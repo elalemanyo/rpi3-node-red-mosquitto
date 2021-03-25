@@ -14,9 +14,7 @@ services:
     image: eclipse-mosquitto:latest
     restart: always
     volumes:
-      - ./data/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
-      - ./data/mosquitto/data:/mosquitto/data
-      - ./data/mosquitto/log:/mosquitto/log
+      - ./data/mosquitto/:/mosquitto/data
     ports:
       - 1883:1883
 
@@ -44,3 +42,9 @@ services:
     user: ${UID}
     volumes:
       - ./data/grafana:/var/lib/grafana
+
+volumes:
+  nodered:
+  mosquitto:
+  grafana:
+  influxdb:
