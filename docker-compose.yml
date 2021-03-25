@@ -9,6 +9,14 @@ services:
     ports:
       - 1880:1880
 
+  mosquitto:
+    image: eclipse-mosquitto
+    restart: always
+    volumes:
+      - ./data/mosquitto:/mosquitto
+    ports:
+      - 1883:1883
+
   influxdb:
     container_name: ${PROJECT_NAME}-influxdb
     image: arm32v7/influxdb:latest
@@ -35,5 +43,7 @@ services:
       - ./data/grafana:/var/lib/grafana
 
 volumes:
+  nodered:
+  mosquitto:
   grafana:
   influxdb:
