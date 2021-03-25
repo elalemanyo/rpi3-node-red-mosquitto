@@ -10,13 +10,13 @@ services:
       - 1880:1880
 
   mosquitto:
+    container_name: ${PROJECT_NAME}-mosquitto
     image: eclipse-mosquitto
     restart: always
     volumes:
       - ./data/mosquitto:/mosquitto
     ports:
       - 1883:1883
-    user: ${UID}
 
   influxdb:
     container_name: ${PROJECT_NAME}-influxdb
