@@ -9,14 +9,16 @@ services:
     ports:
       - 1880:1880
 
-  # mosquitto:
-  #   container_name: ${PROJECT_NAME}-mosquitto
-  #   image: arm32v6/eclipse-mosquitto
-  #   restart: always
-  #   volumes:
-  #     - ./data/mosquitto:/mosquitto
-  #   ports:
-  #     - 1883:1883
+  mosquitto:
+    container_name: ${PROJECT_NAME}-mosquitto
+    image: eclipse-mosquitto:latest
+    restart: always
+    volumes:
+      - ./data/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./data/mosquitto/data:/mosquitto/data
+      - ./data/mosquitto/log:/mosquitto/log
+    ports:
+      - 1883:1883
 
   influxdb:
     container_name: ${PROJECT_NAME}-influxdb
