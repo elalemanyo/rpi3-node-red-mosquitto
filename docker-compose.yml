@@ -16,6 +16,7 @@ services:
       - ./data/mosquitto:/mosquitto
     ports:
       - 1883:1883
+    user: ${UID}
 
   influxdb:
     container_name: ${PROJECT_NAME}-influxdb
